@@ -1,17 +1,21 @@
-import {Body, Controller, Get, Param, Post} from '@nestjs/common';
+import {Body, Controller, Post} from '@nestjs/common';
 import {ReputationService} from "./reputation.service";
+import {GetReputationRequest} from "./model/request/get-reputation.request";
+import {GetReputationResponse} from "./model/response/get-reputation.response";
+import {RecordReputationRequest} from "./model/request/record.request";
+import {RecordReputationResponse} from "./model/response/record.request";
 
 @Controller('reputation')
 export class ReputationController {
     constructor(private readonly reputationService: ReputationService) {}
 
-    @Get(':wallet')
-    getReputation(@Param('wallet') wallet: string) {
-        return this.reputationService.getReputation(wallet);
+    @Post('get')
+    getReputation(@Body() req: GetReputationRequest): Promise<GetReputationResponse> {
+        return this.reputationService.getReputation(req);
     }
 
     @Post('record')
-    record(@Body() dto: { wallet: string; orderId: number; result: 'success' | 'fail' }) {
-        return this.reputationService.record(dto);
+    record(@Body() request: RecordReputationRequest): Promise<RecordReputationResponse> {
+        return this.reputationService.record(request);
     }
 }
