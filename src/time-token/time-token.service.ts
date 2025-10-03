@@ -1,5 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import {MintTimeTokenRequest} from "./model/request/mint-time-token.request";
+import {ListTimeTokenRequest} from "./model/request/list-time-token.request";
 
 @Injectable()
 export class TimeTokenService {
@@ -13,9 +14,10 @@ export class TimeTokenService {
     }
 
 
-    async list(dto: { wallet: string }) {
-        const { wallet } = dto;
-        // TODO: 查询数据库或链上 NFT 列表
-        return [{ tokenId: 1, wallet, hours: 1, skill: 'Golang', status: 'available' }];
+    async list(request: ListTimeTokenRequest): Promise<any> {
+        const { wallet } = request;
+        void wallet;
+        const tokens: any[] = [{ tokenId: 1, hours: 1, skill: 'Golang', status: 'available' }];
+        return tokens;
     }
 }
